@@ -9,7 +9,7 @@ interface FileUploaderProps {
 const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
-      onFileSelect?.(file);
+      onFileSelect?.(acceptedFiles[0] || null);
     },
     [onFileSelect]
   );
