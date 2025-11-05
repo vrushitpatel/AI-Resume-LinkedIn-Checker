@@ -6,7 +6,7 @@
   --font-sans:
     "Mona Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --color-dark-200: #475467;
+  --color-dark-200: #f4f8ff;
   --color-light-blue-100: #c1d3f81a;
   --color-light-blue-200: #a7bff14d;
 
@@ -21,7 +21,10 @@
 
 html,
 body {
-  @apply bg-white;
+  /* Allow dark background image to show and set light default text */
+  background: url("/images/bg-main2.svg");
+  background-size: 120%;
+  color: #e6eeff;
 }
 
 main {
@@ -39,20 +42,31 @@ label {
   @apply text-dark-200;
 }
 input {
-  @apply w-full p-4 inset-shadow rounded-2xl focus:outline-none bg-white;
+  @apply w-full p-4 inset-shadow rounded-2xl focus:outline-none;
+  background-color: rgba(13, 27, 60, 0.65);
+  color: #e6eeff;
+  border: 1px solid rgba(42, 59, 102, 0.5);
 }
 
 textarea {
-  @apply w-full p-4 inset-shadow rounded-2xl focus:outline-none bg-white;
+  @apply w-full p-4 inset-shadow rounded-2xl focus:outline-none;
+  background-color: rgba(13, 27, 60, 0.65);
+  color: #e6eeff;
+  border: 1px solid rgba(42, 59, 102, 0.5);
 }
 
 form {
   @apply flex flex-col items-start gap-8 w-full;
 }
 
+.analyse-w-half {
+  width: 30vw;
+}
+
 @layer components {
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#AB8C95] via-[#000000] to-[#8E97C5];
+    /* Cooler blue/teal gradient for headings with strong contrast */
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#60A5FA] via-[#E0F2FE] to-[#8E97C5];
   }
   .gradient-border {
     @apply bg-gradient-to-b from-light-blue-100 to-light-blue-200 p-4 rounded-2xl;
@@ -61,16 +75,16 @@ form {
     @apply primary-gradient text-white rounded-full px-4 py-2 cursor-pointer w-full;
   }
   .resume-nav {
-    @apply flex flex-row justify-between items-center p-4 border-b border-gray-200;
+    @apply flex flex-row justify-between items-center p-4 border-b border-[#2a3b66]/50;
   }
   .resume-summary {
     @apply flex flex-row items-center justify-center p-4 gap-4;
     .category {
-      @apply flex flex-row gap-2 items-center bg-gray-50 rounded-2xl p-4 w-full justify-between;
+      @apply flex flex-row gap-2 items-center bg-[#162350]/60 rounded-2xl p-4 w-full justify-between;
     }
   }
   .back-button {
-    @apply flex flex-row items-center gap-2 border border-gray-200 rounded-lg p-2 shadow-sm;
+    @apply flex flex-row items-center gap-2 border border-[#2a3b66]/50 rounded-lg p-2 shadow-sm;
   }
   .auth-button {
     @apply primary-gradient rounded-full py-4 px-8 cursor-pointer w-[600px] max-md:w-full text-3xl font-semibold text-white;
@@ -86,7 +100,9 @@ form {
   }
 
   .resume-card {
-    @apply flex flex-col gap-8 h-[560px] w-[350px] lg:w-[430px] xl:w-[490px] bg-white rounded-2xl p-4;
+    @apply flex flex-col gap-8 h-[560px] w-[350px] lg:w-[430px] xl:w-[490px] rounded-2xl p-4;
+    background-color: rgba(16, 24, 56, 0.75);
+    border: 1px solid rgba(42, 59, 102, 0.5);
   }
 
   .resume-card-header {
@@ -98,7 +114,9 @@ form {
   }
 
   .navbar {
-    @apply flex flex-row justify-between items-center bg-white rounded-full p-4 w-full px-10 max-w-[1200px] mx-auto;
+    @apply flex flex-row justify-between items-center rounded-full p-4 w-full px-10 max-w-[1200px] mx-auto;
+    /* background-color: rgb(84 114 186 / 70%); */
+    border: 1px solid rgba(42, 59, 102, 0.5);
   }
 
   .score-badge {
@@ -110,19 +128,27 @@ form {
   }
 
   .uplader-drag-area {
-    @apply relative p-8 text-center transition-all duration-700 cursor-pointer bg-white rounded-2xl min-h-[208px];
+    @apply relative p-8 text-center transition-all duration-700 cursor-pointer rounded-2xl min-h-[208px];
+    background-color: rgba(13, 27, 60, 0.65);
+    border: 1px solid rgba(42, 59, 102, 0.5);
   }
   .uploader-selected-file {
-    @apply flex items-center justify-between p-3 bg-gray-50 rounded-2xl;
+    @apply flex items-center justify-between p-3 rounded-2xl;
+    background-color: rgb(255 255 255 / 80%);
   }
 }
 
 @utility bg-gradient {
-  background: linear-gradient(to bottom, #f0f4ff 60%, #fa7185cc);
+  /* Subtle deep blue gradient overlay to complement dark background image */
+  background: linear-gradient(
+    to bottom,
+    rgba(14, 30, 64, 0.35) 0%,
+    rgba(4, 16, 40, 0.85) 100%
+  );
 }
 
 @utility text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-[#AB8C95] via-[#000000] to-[#8E97C5];
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-[#60A5FA] via-[#E0F2FE] to-[#8E97C5];
 }
 
 @utility gradient-hover {
@@ -130,16 +156,16 @@ form {
 }
 
 @utility primary-gradient {
-  background: linear-gradient(to bottom, #8e98ff, #606beb);
+  background: linear-gradient(to bottom, #0b5fd3, #0b246c);
   box-shadow: 0px 74px 21px 0px #6678ef00;
 }
 
 @utility primary-gradient-hover {
-  background: linear-gradient(to bottom, #717dff, #4957eb);
+  background: linear-gradient(to bottom, #2563eb, #1e3a8a);
 }
 
 @utility inset-shadow {
-  box-shadow: inset 0 0 12px 0 rgba(36, 99, 235, 0.2);
+  box-shadow: inset 0 0 12px 0 rgba(36, 99, 235, 0.25);
   backdrop-filter: blur(10px);
 }
 
@@ -150,4 +176,39 @@ form {
   to {
     opacity: 1;
   }
+}
+
+/* Route-specific dark theme overrides without modifying components */
+/* Auth page: override inner white panel to dark surface (scoped to gradient-border container used on auth) */
+.gradient-border > section.bg-white {
+  background-color: rgba(13, 27, 60, 0.72);
+  border: 1px solid rgba(42, 59, 102, 0.5);
+  color: #e6eeff;
+}
+.gradient-border > section.bg-white h2 {
+  color: #cfe8ff;
+}
+.gradient-border > section.bg-white p {
+  color: #e6eeff;
+}
+
+/* Resume page: ensure light text on dark background */
+.resume-nav .text-gray-800 {
+  color: #e6eeff !important;
+}
+.feedback-section {
+  color: #e6eeff;
+}
+.feedback-section h2,
+h2.text-4xl.\!text-black {
+  color: #e6eeff !important;
+}
+
+/* Wipe page: button harmonization */
+button.bg-blue-500 {
+  background-color: #2563eb !important; /* blue-600 */
+  border: 1px solid rgba(42, 59, 102, 0.5);
+}
+button.bg-blue-500:hover {
+  background-color: #1e3a8a !important; /* indigo-900 */
 }

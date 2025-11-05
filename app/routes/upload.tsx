@@ -102,7 +102,7 @@ const Upload = () => {
   };
 
   return (
-    <main className="bg-[url('/images/bg-main.svg')] bg-cover">
+    <main className="bg-[url('/images/bg-main2.svg')] bg-cover">
       <Navbar />
 
       <section className="main-section">
@@ -111,7 +111,7 @@ const Upload = () => {
           {isProcessing ? (
             <>
               <h2>{statusText}</h2>
-              <img src="/images/resume-scan.gif" className="w-full" />
+              <img src="/images/resume-scan.gif" className="analyse-w-half" />
             </>
           ) : (
             <h2>Drop your Resume for an ATS score and improvement tips</h2>

@@ -1,26 +1,28 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { usePuterStore } from "~/lib/puter"
+import { usePuterStore } from "~/lib/puter";
 
-export const meta = () => ([
-  { title: 'ProfileTuner.ai" | Auth'},
-  { name: 'description', content: 'Log into your Account' },
-])
+export const meta = () => [
+  { title: 'ProfileTuner.ai" | Auth' },
+  { name: "description", content: "Log into your Account" },
+];
 
 const Auth = () => {
   const { isLoading, auth } = usePuterStore();
   const location = useLocation();
-  const next = location.search.split('next=')[1];
+  const next = location.search.split("next=")[1];
   const navigate = useNavigate();
 
-  {/* If Already Authenticated Please move to the next desired Page */}
+  {
+    /* If Already Authenticated Please move to the next desired Page */
+  }
 
-  useEffect( () => {
-    if(auth.isAuthenticated) navigate(next);
-  }, [auth.isAuthenticated, next])
+  useEffect(() => {
+    if (auth.isAuthenticated) navigate(next);
+  }, [auth.isAuthenticated, next]);
 
   return (
-    <main className="bg-[url('/images/bg-main.svg')] bg-cover min-h-screen flex items-center justify-center">
+    <main className="bg-[url('/images/bg-main2.svg')] bg-cover min-h-screen flex items-center justify-center">
       <div className="gradient-border shadow-lg">
         <section className="flex flex-col gap-8 bg-white rounded-2xl p-10">
           <div className="flex flex-col items-center gap-2 text-center">
@@ -50,7 +52,7 @@ const Auth = () => {
         </section>
       </div>
     </main>
-  )
-}
+  );
+};
 
-export default Auth
+export default Auth;

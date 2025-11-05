@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import ATS from "~/components/ATS";
 import Details from "~/components/Details";
+import Navbar from "~/components/Navbar";
 import Summary from "~/components/Summary";
 import { usePuterStore } from "~/lib/puter";
 
@@ -52,15 +53,9 @@ const Resume = () => {
   }, [id]);
 
   return (
-    <main className="!pt-0">
-      <nav className="resume-nav">
-        <Link to="/" className="back-button">
-          <img src="/icons/back.svg" alt="Logo" className="w-2.5 h-2.5" />
-          <span className="text-gray-800 text-sm font-semibold">
-            Back to Homepage
-          </span>
-        </Link>
-      </nav>
+    <main className="!pt-0 bg-[url('/images/bg-main2.svg')] bg-cover">
+      <br />
+      <Navbar />
       <div className="flex flex-rows w-full max-lg:flex-col-reverse">
         <section className="feedback-section bg-[url('/images/bg-small.svg') bg-cover h-screen sticky top-0 items-center justify-center]">
           {imageUrl && resumeUrl && (
@@ -76,7 +71,18 @@ const Resume = () => {
           )}
         </section>
         <section className="feedback-section">
-          <h2 className="text-4xl !text-black font-bold">Resume Review</h2>
+          <div className="flex flex-row justify-between items-center">
+            <h2 className="text-4xl font-bold">Resume Review</h2>
+            <button
+              className="primary-button"
+              style={{ width: "50%" }}
+              onClick={() => {
+                navigate(`/interview/${id}`);
+              }}
+            >
+              Prepare for Interview
+            </button>
+          </div>
           {feedback ? (
             <div className="flex flex-col gap-8 animate-in fade-in duration-1000">
               <Summary feedback={feedback} />
