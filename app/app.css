@@ -192,6 +192,10 @@ form {
   color: #e6eeff;
 }
 
+.bg-card-blue-50 {
+  background-color: #dfedff;
+}
+
 /* Resume page: ensure light text on dark background */
 .resume-nav .text-gray-800 {
   color: #e6eeff !important;

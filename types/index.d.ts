@@ -56,3 +56,35 @@ interface Feedback {
     }[];
   };
 }
+
+interface InterviewPrep {
+  interviewQuestions: {
+    behavioralQuestions: {
+      question: string;
+      why: string;
+      starAnswer: {
+        situation: string;
+        task: string;
+        action: string;
+        result: string;
+      };
+    }[];
+    technicalQuestions: {
+      question: string;
+      difficulty: "Easy" | "Easy-Medium" | "Medium" | "Medium-Hard" | "Hard";
+      hint: string;
+      keyPoints: string[];
+    }[];
+    companyResearch: {
+      overview: string;
+      recentNews: string[];
+      culture: string;
+      talkingPoints: string[];
+    };
+    questionsToAsk: {
+      question: string;
+      why: string;
+    }[];
+    preparationTips: string[];
+  };
+}

@@ -135,6 +135,49 @@ export const AIResponseFormat = `
       };
     }`;
 
+export const AIInterviewPrepResponseFormat = `
+{
+  "behavioralQuestions": [
+    {
+      "question": "Tell me about a time when...",
+      "why": "This tests your leadership skills",
+      "starAnswer": {
+        "situation": "At my previous role at...",
+        "task": "I was responsible for...",
+        "action": "I took the following steps...",
+        "result": "This resulted in a 30% increase..."
+      }
+    }
+    // 5-7 questions
+  ],
+  "technicalQuestions": [
+    {
+      "question": "Explain the difference between...",
+      "difficulty": "Easy/Medium/Hard anyone",
+      "hint": "Focus on practical applications",
+      "keyPoints": ["Point 1", "Point 2"]
+    }
+    // 5-7 questions
+  ],
+  "companyResearch": {
+    "overview": "Innovatech Solutions is a...",
+    "recentNews": ["News item 1", "News item 2"],
+    "culture": "The company values...",
+    "talkingPoints": ["Mention your experience with...", "Highlight..."]
+  },
+  "questionsToAsk": [
+    {
+      "question": "What does success look like in this role?",
+      "why": "Shows you're goal-oriented"
+    }
+    // 5 questions
+  ],
+  "preparationTips": [
+    "Review your project on microservices architecture",
+    "Be ready to discuss your Golang experience in detail"
+  ]
+}`;
+
 export const prepareInstructions = ({
   jobTitle,
   jobDescription,
@@ -154,3 +197,24 @@ export const prepareInstructions = ({
   Provide the feedback using the following format: ${AIResponseFormat}
   Return the analysis as a JSON object, without any other text and without the backticks.
   Do not include any other text or comments.`;
+
+
+export const interviewPrepPrompt = ({
+  jobTitle,
+  jobDescription,
+  companyName
+}: {
+  jobTitle: string;
+  jobDescription: string;
+  companyName: string;
+}) =>
+  `You are an expert interview coach and recruiter.
+
+Based on the following information:
+- Job Title: ${jobTitle}
+- Job Description: ${jobDescription}
+- Company: ${companyName}
+
+Generate a comprehensive interview preparation guide.
+
+Provide the response in the following JSON format: ${AIInterviewPrepResponseFormat}`;

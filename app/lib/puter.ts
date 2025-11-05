@@ -76,6 +76,10 @@ interface PuterStore {
       path: string,
       message: string
     ) => Promise<AIResponse | undefined>;
+    interviewQuestions: (
+      path: string,
+      message: string
+    ) => Promise<AIResponse | undefined>;
     img2txt: (
       image: string | File | Blob,
       testMode?: boolean

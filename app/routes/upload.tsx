@@ -5,7 +5,30 @@ import { useNavigate } from "react-router";
 import { usePuterStore } from "~/lib/puter";
 import { convertPdfToImage } from "~/lib/pdf2img";
 import { generateUUID } from "~/lib/utils";
-import { prepareInstructions } from "~/constants";
+import { interviewPrepPrompt, prepareInstructions } from "~/constants";
+
+// Extract JSON content from potential Markdown-fenced code blocks
+function extractJsonContent(possiblyFenced: string): string {
+  const text = (possiblyFenced ?? "").trim();
+  // Full fenced block like ```json\n...\n```
+  const fullFence = text.match(/^```(?:json)?\s*([\s\S]*?)\s*```$/i);
+  if (fullFence && fullFence[1]) {
+    return fullFence[1].trim();
+  }
+  // Inline fences anywhere in text
+  if (text.includes("```")) {
+    const first = text.indexOf("```");
+    const last = text.lastIndexOf("```");
+    if (last > first) {
+      const inside = text
+        .slice(first + 3, last)
+        .replace(/^json\s*/i, "")
+        .trim();
+      if (inside) return inside;
+    }
+  }
+  return text;
+}
 
 const Upload = () => {
   const { auth, isLoading, fs, ai, kv } = usePuterStore();
@@ -57,6 +80,7 @@ const Upload = () => {
       jobTitle,
       jobDescription,
       feedback: "",
+      interviewQuestions: "",
     };
 
     await kv.set(`resume:${uuid}`, JSON.stringify(data));
@@ -70,12 +94,52 @@ const Upload = () => {
 
     if (!feedback) return setStatusText("Error: Failed to Analyze Resume");
 
+    setStatusText("Preparing Interview Questions... ");
+
+    const interviewQuestions = await ai.feedback(
+      uploadedFile.path,
+      interviewPrepPrompt({ jobTitle, jobDescription, companyName })
+    );
+
+    if (!interviewQuestions)
+      return setStatusText("Error: Failed to Retrive Interview Prep Questions");
+
     const feedbackText =
       typeof feedback.message.content === "string"
         ? feedback.message.content
         : feedback.message.content[0].text;
 
-    data.feedback = JSON.parse(feedbackText);
+    try {
+      data.feedback = JSON.parse(extractJsonContent(feedbackText));
+    } catch (err) {
+      console.error("Failed to parse feedback JSON:", err, feedbackText);
+      setStatusText("Error: Invalid JSON in AI feedback");
+      setIsProcessing(false);
+      return;
+    }
+
+    await kv.set(`resume:${uuid}`, JSON.stringify(data));
+
+    const interviewQuestionsText =
+      typeof interviewQuestions.message.content === "string"
+        ? interviewQuestions.message.content
+        : interviewQuestions.message.content[0].text;
+
+    try {
+      data.interviewQuestions = JSON.parse(
+        extractJsonContent(interviewQuestionsText)
+      );
+    } catch (err) {
+      console.error(
+        "Failed to parse interview questions JSON:",
+        err,
+        interviewQuestionsText
+      );
+      setStatusText("Error: Invalid JSON in interview response");
+      setIsProcessing(false);
+      return;
+    }
+
     await kv.set(`resume:${uuid}`, JSON.stringify(data));
 
     setStatusText("Analysis Complete, Redirecting... ");
